@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <body>
+        <div>
+            <label for="autore">AUTHOR</label>
+            <input type="text" id="autore">
+            <label for="messaggi">MESSAGE</label>
+            <input type="text" id="messaggi">
+            <button onclick="addToList()">push</button>
+        </div>
+        <p id="ul"></p>
+        <script>
+            const url="https://mock-data-api.firebaseio.com/webb21/messages.json"
+            const ul=document.getElementById("ul")
+
+            function addToList(){
+                const autore=document.getElementById("autore").value
+                const messaggi=document.getElementById("messaggi").value
+                const addToChat={
+                    author: autore,
+                    message: messaggi
+                }
+                fetch(url,{
+                    method:"POST",
+                    headers:{"Content-Type" : "application/json"} ,
+                    body:JSON.stringify(addToChat)
+                }) 
+                .then(res=>{
+                 getData()
+                })
+            }
+
+            function getData(){
+                fetch(url)
+                .then(res=>res.json())
+                .then(data=>{
+                 dataArray(data)
+                })
+                ul.innerHTML=""
+            } getData()
+
+            function dataArray(data){
+                Object.entries(data).forEach(element => {
+                    const li=document.createElement("li")
+                    li.innerText=`Author :${element[1].author}  -  Message : ${element[1].message}`
+                    ul.appendChild(li)
+                });
+            }
+
+        </script>
+    </body>
+</head>
