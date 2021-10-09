@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<head>
+    <body>
+        <ul id="head"></ul>
+        <script>
+            const sel=document.getElementById("head")
+            fetch("https://mock-data-api.firebaseio.com/webb21-chats.json")
+            .then(res=>res.json())
+            .then(data=>{
+                Object.entries(data).forEach(items => {
+                    const li=document.createElement("li")
+                    li.innerText=items[1].message
+                    sel.appendChild(li)
+                });
+            })
+        </script>
+    </body>
+</head>
