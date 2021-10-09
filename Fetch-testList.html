@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+    <body>
+        <div>
+            
+            <label for="selectCamrades">select klasskamrater</label>
+            <select name="selectCamrades" id="chose">
+                <option value="1">iza</option>
+                <option value="2">jesper</option>
+                <option value="3">hassan</option>
+            </select>
+            <button onclick="getOptionsValue()">push</button>
+        </div>
+        <div>
+            <label for="auhor">author</label>
+            <input type="text" id="author">
+            <label for="message">message</label>
+            <input type="text" id="message">
+            <button onclick="addToServer()">push data</button>
+        </div>
+        <ul id="ul"></ul>
+        <script>
+            const list=[
+               { 
+                name:"iza"
+            },
+            {
+                name:"jesper"
+            },
+            {
+                name:"hassan"
+            }
+        ]
+        let ale;
+        const ul=document.getElementById("ul")
+
+        function addToServer(){
+            if(!(ale==undefined)){
+                ul.innerHTML=""
+            const author=document.getElementById("author").value
+            const message=document.getElementById("message").value
+            const addToServerList={
+                author:author,
+                message:message
+            }
+            fetch(ale,{
+                method:"POST",
+                headers:{"Content-Type" : "application/json"},
+                body:JSON.stringify(addToServerList)
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                getOptionsValue2()
+            })
+        }
+        }
+
+        function getOptionsValue2(){
+            fetch(ale)
+            .then(res=>res.json())
+            .then(data=>{
+                Object.entries(data).forEach(items=>{
+                    const li=document.createElement("li")
+                    li.innerText=`AUTHOR :${items[1].author}  MESSAGE : ${items[1].message}`
+                    ul.appendChild(li)
+                })
+            })
+        }
+
+        function getOptionsValue(){
+            ul.innerHTML=""
+            const value=document.getElementById("chose").value
+            const camrades=list[value-1].name
+           const username=camrades
+            const url= `https://mock-data-api.firebaseio.com/webb21-chats/${username}/messages.json`
+            ale=url
+            getData(url)
+            
+            
+          //!----  insideData(url) build a function whose get this data basen on the comrade, to push in ur nwe values
+            //console.log(camrades)
+        }
+         function getData(a){
+            fetch(a)
+            .then(res=>res.json())
+            .then(data=>{
+             dataToArray(data)
+            })
+        }
+
+       function dataToArray(a){
+           Object.entries(a).forEach(element => {
+               const li=document.createElement("li")
+               li.innerText=`AUTHOR : ${element[1].author}  MESSAGE : ${element[1].message}`
+               ul.appendChild(li)
+                });
+        }
+        </script>
+    </body>
+</head>
