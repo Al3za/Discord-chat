@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+    <body>
+        <ul id="ul"></ul>
+        <script>
+            const url="https://mock-data-api.firebaseio.com/webb21/messages.json"
+            const ul=document.getElementById("ul")
+            function fetc(){
+                fetch(url)
+                .then(res=>res.json())
+                .then(data=>{
+                    succes(data)
+                })
+            }fetc()
+            function succes(data){
+                Object.entries(data).forEach(items => {
+                  //  const 
+                    const li=document.createElement("li")
+                    li.innerText=`${items[1].message||"Message not find"}`
+                    ul.appendChild(li)
+
+                });
+            }
+        </script>
+    </body>
+</head>
