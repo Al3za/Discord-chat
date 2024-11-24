@@ -1,4 +1,3 @@
-# fetching Discord
+# Classmates Discord-App
 
-I den här projekt fetchar vi mot Discords apier som tillhör vår web 21 grup så att kan vi skicka meddelanden till vår klasskamrater och få deras meddelande.
-
+In this project, we used a custom Api so we can send messages to our classmates and receive their messages. (The Api is not available anymore)
